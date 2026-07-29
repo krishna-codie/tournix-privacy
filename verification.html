@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Verification Evidence - Tournix Bot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Modern Light UI Theme for Tournix Verification Page */
+        :root {
+            --bg-main: #ffffff;
+            --bg-card: #f8fafc;
+            --bg-card-hover: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-blue: #0284c7;
+            --accent-indigo: #4f46e5;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-highlight: rgba(2, 132, 199, 0.3);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 60px;
+            background-image: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header / Navbar */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 14px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-text {
+            color: var(--text-primary);
+        }
+
+        /* Logo Styling */
+        .logo-box {
+            width: 40px;
+            height: 40px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Hero Header */
+        .hero-section {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: rgba(2, 132, 199, 0.1);
+            color: var(--accent-blue);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Screenshot Cards Grid */
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .screenshot-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--border-highlight);
+        }
+
+        .card-image {
+            width: 100%;
+            min-height: 280px;
+            max-height: 400px;
+            overflow: auto;
+            background-color: #f1f5f9;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .card-image img {
+            width: auto;
+            max-width: 100%;
+            height: auto;
+            max-height: 368px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .screenshot-card:hover .card-image img {
+            transform: scale(1.02);
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        /* Info Section */
+        .info-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 40px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .info-section h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-section h2 span {
+            color: var(--accent-blue);
+            font-weight: 800;
+        }
+
+        .info-section p {
+            color: #cbd5e1;
+            margin-bottom: 14px;
+        }
+
+        .intent-list {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .intent-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .intent-list li::before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: var(--accent-blue);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+        }
+
+        .footer-sub {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                min-height: 240px;
+                max-height: 350px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero-section {
+                padding: 40px 0 30px;
+            }
+
+            .info-section {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="brand">
+                <div class="logo-box">
+                    <img src="tournix.webp" alt="Tournix Logo">
+                </div>
+                <span class="logo-text">Tournix</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+
+        <!-- Header Section -->
+        <div class="hero-section">
+            <div class="badge">Discord Verification</div>
+            <h1>Discord Verification Evidence</h1>
+            <p class="subtitle">The following screenshots demonstrate the functionality of the Tournix Discord Bot for
+                Discord's Privileged Intent Verification.</p>
+        </div>
+
+        <!-- Screenshots Grid -->
+        <div class="screenshots-grid">
+
+            <!-- Bot Statistics -->
+            <div class="screenshot-card">
+                <div class="card-image">
+                    <img src="screenshots/bot-statistics.png" alt="Bot Statistics">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Bot Statistics</h3>
+                    <p class="card-description">Displays uptime, total guilds, total users, CPU, RAM, latency and
+                        confirms the bot displays the total number of users using Server Members Intent.</p>
+                </div>
+            </div>
+
+            <!-- Help Command -->
+            <div class="screenshot-card">
+                <div class="card-image">
+                    <img src="screenshots/help-command.png" alt="Help Command">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Help Command</h3>
+                    <p class="card-description">Shows the main help menu and available bot modules.</p>
+                </div>
+            </div>
+
+            <!-- Ping Command -->
+            <div class="screenshot-card">
+                <div class="card-image">
+                    <img src="screenshots/ping-command.png" alt="Ping Command">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Ping Command</h3>
+                    <p class="card-description">Demonstrates message command processing and bot responsiveness.</p>
+                </div>
+            </div>
+
+            <!-- Server Information -->
+            <div class="screenshot-card">
+                <div class="card-image">
+                    <img src="screenshots/server-information.png" alt="Server Information">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Server Information</h3>
+                    <p class="card-description">Displays total members, human members, bot members, server metadata,
+                        roles and channels using the Guild Members Intent.</p>
+                </div>
+            </div>
+
+            <!-- User Information -->
+            <div class="screenshot-card">
+                <div class="card-image">
+                    <img src="screenshots/user-information.png" alt="User Information">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">User Information</h3>
+                    <p class="card-description">Displays detailed information for a selected Discord member.</p>
+                </div>
+            </div>
+
+            <!-- Tournament Manager -->
+            <div class="screenshot-card">
+                <div class="card-image">
+                    <img src="screenshots/tournament-manager.png" alt="Tournament Manager">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Tournament Manager</h3>
+                    <p class="card-description">Shows the interactive esports tournament management interface used to
+                        create and manage tournaments.</p>
+                </div>
+            </div>
+
+            <!-- Member Count -->
+            <div class="screenshot-card">
+                <div class="card-image">
+                    <img src="screenshots/member-count.png" alt="Member Count">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Member Count</h3>
+                    <p class="card-description">Shows the total number of users connected to the bot (215,127 users),
+                        demonstrating why Guild Members Intent is required.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Information Section -->
+        <div class="info-section">
+            <h2><span>ℹ️</span> Privileged Intents Required</h2>
+            <p>Tournix requires the following Discord Privileged Intents to function correctly:</p>
+            <ul class="intent-list">
+                <li><strong>Server Members Intent:</strong> Required to access member counts, user information, and
+                    server member lists across all guilds.</li>
+                <li><strong>Message Content Intent:</strong> Required to process user commands and provide interactive
+                    bot functionality.</li>
+            </ul>
+            <p>These intents are essential for delivering the full Tournament Management, Leaderboards, and User
+                Information features that server owners expect from Tournix.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; Tournix Bot. All rights reserved.</p>
+            <p class="footer-sub">Designed for Discord Community & Esports Management Compliance.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
